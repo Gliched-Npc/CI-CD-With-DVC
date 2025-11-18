@@ -2,5 +2,5 @@ scikit-learn
 joblib
 numpy
 pandas
-evidently
+evidently==0.2.0
 dvc
