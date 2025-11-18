@@ -1,37 +1,30 @@
 from sklearn.datasets import load_iris
-import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+import pandas as pd
 import joblib
 import os
-from sklearn.ensemble import RandomForestClassifier
 
 # Load iris dataset
 iris = load_iris()
 df = pd.DataFrame(iris.data, columns=iris.feature_names)
 df["target"] = iris.target
 
-# Create model directory
-os.makedirs("model", exist_ok=True)
-
-# Split into train and test
+# Split
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
 
-# Prepare train and test sets
-X_train = train_df.drop("target", axis=1)
-y_train = train_df["target"]
+# Create model folder
+os.makedirs("model", exist_ok=True)
 
-X_test = test_df.drop("target", axis=1)
-y_test = test_df["target"]
-
-# Save train and test data as tuples
-joblib.dump((X_train, y_train), "model/train_data.pkl")
-joblib.dump((X_test, y_test), "model/test_data.pkl")
+# Save train & test
+joblib.dump(train_df, "model/train_data.pkl")
+joblib.dump(test_df, "model/test_data.pkl")
 
 # Train model
 model = RandomForestClassifier()
-model.fit(X_train, y_train)
+model.fit(train_df.drop("target", axis=1), train_df["target"])
 
 # Save model
 joblib.dump(model, "model/iris_model.pkl")
 
-print("Training complete. Model and data saved.")
+print("Training complete.")
