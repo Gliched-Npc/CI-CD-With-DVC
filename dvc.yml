@@ -1,0 +1,26 @@
+stages:
+  train:
+    cmd: python src/train.py
+    deps:
+      - data/Iris.csv
+      - src/train.py
+    outs:
+      - model/iris_model.pkl
+      - model/train_data.pkl
+      - model/test_data.pkl
+
+  test:
+    cmd: python src/test.py
+    deps:
+      - src/test.py
+      - model/iris_model.pkl
+      - model/test_data.pkl
+
+  monitor:
+    cmd: python src/monitor.py
+    deps:
+      - src/monitor.py
+      - model/train_data.pkl
+      - model/test_data.pkl
+    outs:
+      - model/data_drift_report.html
