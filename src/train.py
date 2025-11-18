@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 import joblib
 import os
 
-df = pd.read_csv("data/raw/iris.csv")
+df = pd.read_csv("data/Iris.csv")
 X = df.drop("target", axis=1)
 y = df["target"]
 
